@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/fontawesome.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Comforter+Brush&display=swap" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.slim.js"
+        integrity="sha256-HwWONEZrpuoh951cQD1ov2HUK5zA5DwJ1DNUXaM6FsY=" crossorigin="anonymous"></script>
+
+</head>
+
+<body>
+    <h1>JS API Call Using XMLHttpRequest</h1>
+    <!-- <button type="button" onclick="getDocs()">Click here</button> -->
+    <div id="content">
+    </div>
+
+    <script>
+        const url = "https://jsonplaceholder.typicode.com/posts"
+
+        const xhttp = new XMLHttpRequest()
+
+        let idText = []
+        let titleText = []
+        let bodyText = []
+
+        xhttp.onload = function () {
+            if (xhttp.status == 200) {
+                console.log(xhttp.status)
+                jsonObj = JSON.parse(this.responseText)
+                renderHTML(jsonObj)
+            } else {
+                console.log("Error")
+            }
+
+            function renderHTML(jsonData) {
+                for (const i in jsonData) {
+                    idText.push(jsonData[i].id)
+                    titleText.push(jsonData[i].title)
+                    bodyText.push(jsonData[i].body)
+
+                    $("#content").append("<h3>" + idText[i] + "<h3>")
+                    $("#content").append("<p><u>" + titleText[i] + "</u></p>")
+                    $("#content").append("<p>" + bodyText[i] + "</p>")
+                }
+            }
+        }
+        xhttp.open("GET", url)
+        xhttp.send()
+    </script>
+</body>
+
+</html>
